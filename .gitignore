@@ -1,0 +1,7 @@
+# 忽略所有原始大資料與暫存檔
+data/raw/
+*.db
+*.csv
+*.txt
+.DS_Store
+__pycache__/
