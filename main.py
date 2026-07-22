@@ -8,14 +8,13 @@ import matplotlib
 matplotlib.use('Agg')
 
 # 1. 連結到建立好的 SQLite 資料庫
-# 這裡使用實際存在的 .db 檔案
 db_path = "./data/genshin_gacha.db"
 if not os.path.exists(db_path):
     raise FileNotFoundError(f"找不到資料庫檔案：{db_path}")
 
 conn = sqlite3.connect(db_path)
 
-# 2. 一鍵把整張大表讀成 Pandas DataFrame
+# 2.  Pandas DataFrame
 df = pd.read_sql_query("SELECT * FROM gacha_records", conn)
 conn.close()
 
@@ -48,7 +47,7 @@ hour_summary = df.groupby('hour').agg(
     五星出貨率=('is_5star', 'mean')
 ).reset_index()
 
-# 解決 matplotlib 中文亂碼問題 (可根據系統調整，這裡預設使用微軟正黑體)
+# 解決 matplotlib 中文亂碼問題
 plt.rcParams['font.family'] = ['Microsoft JhengHei', 'sans-serif']
 plt.rcParams['axes.unicode_minus'] = False
 
