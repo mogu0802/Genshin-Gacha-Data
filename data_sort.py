@@ -1,5 +1,5 @@
 import os
-import sqlite3  # 🌟 引入 Python 內建的 SQLite 資料庫套件
+import sqlite3 
 import pandas as pd
 import sys
 
@@ -40,13 +40,11 @@ for file_name in os.listdir(folder_path):
         try:
             df = read_with_fallback_encoding(file_path)
 
-            # 🌟 這裡最重要！只把真正有中文需要翻譯的欄位名稱放進來
-            # 根據原神抽卡資料，通常是道具名稱（name）和卡池名稱（gacha_type 或 item_type）
+            # 根據抽卡資料，道具名稱（name）和卡池名稱（gacha_type 或 item_type）
             text_columns = ['name', 'gacha_type', 'item_type']
 
             for col in text_columns:
                 if col in df.columns:
-                    # 向量化欄位加速，速度比舊版快數十倍，畫面再也不會狂跳
                     df[col] = df[col].astype(str).apply(cc.convert)
 
             all_data_frames.append(df)
